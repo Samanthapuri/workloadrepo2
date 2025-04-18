@@ -1,0 +1,24 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Blueprint
+metadata:
+  name: amgenbp
+  project: defaultproject
+spec:
+  base:
+    name: default
+    version: 2.10.0
+  defaultAddons:
+    enableIngress: true
+    enableMonitoring: true
+  driftWebhook:
+    enabled: true
+  networkPolicy:
+    policies:
+    - name: amgenpolicy
+      version: v1
+    profile:
+      name: default
+      version: latest
+  type: custom
+  version: v3
+  versionState: active

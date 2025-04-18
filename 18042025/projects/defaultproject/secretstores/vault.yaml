@@ -1,0 +1,10 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: SecretStore
+metadata:
+  name: vault
+  project: defaultproject
+spec:
+  config:
+    vault:
+      host: https://vault.test.svc:8200
+  provider: Vault

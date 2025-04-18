@@ -1,0 +1,10 @@
+apiVersion: security.k8smgmt.io/v3
+kind: ClusterNetworkPolicy
+metadata:
+  name: testv1
+  project: defaultproject
+spec:
+  rules:
+  - name: test1
+    version: v1
+  version: v1

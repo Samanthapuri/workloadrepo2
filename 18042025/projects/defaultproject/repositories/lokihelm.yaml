@@ -1,0 +1,18 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: lokihelm
+  project: defaultproject
+spec:
+  agents:
+  - {}
+  endpoint: https://grafana.github.io/helm-charts
+  options: {}
+  type: Helm
+status:
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: mxvpovk
+  webhookConfig:
+    webhookSecret: 8fa80df88af67bb67551c3664d7d6ddf8e0a3bab8d0421c117129cebbae08c56
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/mxvpovk

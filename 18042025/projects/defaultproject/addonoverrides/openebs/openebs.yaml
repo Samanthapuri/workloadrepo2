@@ -1,0 +1,6 @@
+hostpathClass:
+  name: localstorage
+  enabled: true
+  reclaimPolicy: Delete
+  isDefaultClass: true
+  basePath: "/opt/testpath"

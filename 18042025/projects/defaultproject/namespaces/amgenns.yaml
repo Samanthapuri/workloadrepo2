@@ -1,0 +1,20 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Namespace
+metadata:
+  name: amgenns
+  project: defaultproject
+spec:
+  limitRange:
+    container: {}
+    pod: {}
+  namespaceMeshPolicyParams: {}
+  networkPolicyParams:
+    networkPolicyEnabled: true
+    policies:
+    - name: amgennspolicy
+      version: v2
+  placement:
+    labels:
+    - key: rafay.dev/clusterName
+      value: vijayseks04102024
+  resourceQuotas: {}

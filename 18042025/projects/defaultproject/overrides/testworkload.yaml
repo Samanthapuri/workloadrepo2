@@ -1,0 +1,18 @@
+apiVersion: apps.k8smgmt.io/v3
+kind: Override
+metadata:
+  labels:
+    rafay.dev/overrideScope: clusterLabels
+    rafay.dev/overrideType: manifestsFile
+  name: testworkload
+  project: defaultproject
+spec:
+  placement:
+    labels:
+    - key: rafay.dev/clusterName
+      value: onpremtest
+  resource:
+    type: Workload
+  type: Yaml
+  valuesPath:
+    name: file://testworkload/testworkload.yaml

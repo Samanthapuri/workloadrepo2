@@ -1,0 +1,6 @@
+rafayExcludedNamespaces:
+  - excludedNamespaces:
+    - kube-system
+    - rafay-infra
+    processes:
+    - '*'

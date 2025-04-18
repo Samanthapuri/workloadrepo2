@@ -1,0 +1,25 @@
+apiVersion: opa.k8smgmt.io/v3
+kind: OPAProfile
+metadata:
+  name: test1
+  project: defaultproject
+spec:
+  excludedNamespaces:
+  - namespaces:
+    - name: onpremtest2
+    - name: dbschematest
+    - name: onpremtestnamespace
+    processes:
+    - '*'
+  installationParams:
+    auditInterval: 60
+    constraintViolationsLimit: 20
+  opaVersion: 3.11.0
+  syncObjects:
+  - group: storage.k8s.io
+    kind: StorageClass
+    version: v1
+  - group: networking.k8s.io
+    kind: ingressclasses
+    version: v1
+  version: v3

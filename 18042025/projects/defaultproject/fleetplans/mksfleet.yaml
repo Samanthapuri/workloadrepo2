@@ -1,0 +1,65 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: FleetPlan
+metadata:
+  name: mksfleet
+  project: defaultproject
+spec:
+  agents:
+  - name: tfdemo
+  fleet:
+    kind: clusters
+    labels:
+      rafay.dev/clusterName: vijayseks121220242
+    projects:
+    - name: defaultproject
+  operationWorkflow:
+    operations:
+    - action:
+        continueOnFailure: true
+        description: this is no op fleet job
+        name: pathjob
+        patchConfig:
+        - op: replace
+          path: .metadata.labels.'rafay.dev\\/clusterName'
+          value: '{{{ .global.Rafay.ClusterName }}}'
+        type: patch
+      name: patch
+      prehooks:
+      - containerConfig:
+          arguments:
+          - -c
+          - $(COMMAND1)
+          commands:
+          - bash
+          cpuLimitMilli: "500"
+          env:
+            COMMAND1: '"kubectl create ns vijaystestns"'
+          image: samanthapuri/kubectl:v1
+          memoryLimitMb: "500"
+          runner:
+            type: cluster
+        continueOnFailure: true
+        inject:
+        - KUBECONFIG
+        name: kubectl
+        successCondition: |-
+          apiVersion: v1
+          clusters:
+          - cluster:
+              certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNWakNDQWYyZ0F3SUJBZ0lSQUo4RE52ME1seXI1UDBEeEx2aGxMUWd3Q2dZSUtvWkl6ajBFQXdJd2dZb3gKRERBS0JnTlZCQVlUQTFWVFFURVRNQkVHQTFVRUNCTUtRMkZzYVdadmNtNXBZVEVTTUJBR0ExVUVCeE1KVTNWdQpibmwyWVd4bE1Sb3dHQVlEVlFRS0V4RlNZV1poZVNCVGVYTjBaVzF6SUVsdVl6RVZNQk1HQTFVRUN4TU1VbUZtCllYa2dVMlZ1ZEhKNU1SNHdIQVlEVlFRREV4VnlZV1poZVMxamIzSmxMWEpsYkdGNUxYVnpaWEl3SGhjTk1qQXcKTnpJMk1EUTBORFE1V2hjTk16QXdOekkyTURRME5EUTVXakNCaWpFTU1Bb0dBMVVFQmhNRFZWTkJNUk13RVFZRApWUVFJRXdwRFlXeHBabTl5Ym1saE1SSXdFQVlEVlFRSEV3bFRkVzV1ZVhaaGJHVXhHakFZQmdOVkJBb1RFVkpoClptRjVJRk41YzNSbGJYTWdTVzVqTVJVd0V3WURWUVFMRXd4U1lXWmhlU0JUWlc1MGNua3hIakFjQmdOVkJBTVQKRlhKaFptRjVMV052Y21VdGNtVnNZWGt0ZFhObGNqQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQQpCSjFzZ3RnelYrYnJES1BZU1ltSUlZY0Z6Zy9BY0NPSWgydEgvanVyYU16WG1aalpCRmdmRXFDOHhMNmFGaitQClFkdEs5TjZKNmFoMUZhelZNSFBNK1o2alFqQkFNQTRHQTFVZER3RUIvd1FFQXdJQ2hEQWRCZ05WSFNVRUZqQVUKQmdnckJnRUZCUWNEQWdZSUt3WUJCUVVIQXdFd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBS0JnZ3Foa2pPUFFRRApBZ05IQURCRUFpQSs3MFZLd1RFU1RlMWc2V0U2MENhYUVPYzAzOExYb3hHdkJiRU9HbHE2bVFJZ09jVGxqRmJvCng4L3ZJY3YvQWYzVFY0aFNJaVVvZVV0SnpLOVRmYkh5cFc4PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+              server: https://mxnndj2.user.kubeapi-proxy.rafay.dev:443
+            name: vijayseks121220242-new
+          contexts:
+          - context:
+              cluster: vijayseks121220242-new
+              namespace: default
+              user: vijaysamanthapuri-64rafay-46co
+            name: vijayseks121220242-new
+          current-context: vijayseks121220242-new
+          kind: Config
+          preferences: {}
+          users:
+          - name: vijaysamanthapuri-64rafay-46co
+            user:
+              client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNuakNDQWtPZ0F3SUJBZ0lSQUlhNS92SVdHRGROQWdkbXIvejh1ZEF3Q2dZSUtvWkl6ajBFQXdJd2dZb3gKRERBS0JnTlZCQVlUQTFWVFFURVRNQkVHQTFVRUNCTUtRMkZzYVdadmNtNXBZVEVTTUJBR0ExVUVCeE1KVTNWdQpibmwyWVd4bE1Sb3dHQVlEVlFRS0V4RlNZV1poZVNCVGVYTjBaVzF6SUVsdVl6RVZNQk1HQTFVRUN4TU1VbUZtCllYa2dVMlZ1ZEhKNU1SNHdIQVlEVlFRREV4VnlZV1poZVMxamIzSmxMWEpsYkdGNUxYVnpaWEl3SGhjTk1qVXcKTVRBek1UVTFNakE1V2hjTk1qWXdNVEF6TVRVMU1qQTVXakIwTVhJd2NBWURWUVFERTJsaFBUWnJiakF6TURJdgpiejAyYTI1eU56UXlMM0E5Y25neU9HOXRiQzkxUFhacGFtRjVjMkZ0WVc1MGFHRndkWEpwTFRZMGNtRm1ZWGt0Ck5EWmpieTlwY3oxbVlXeHpaUzlsY3oxbVlXeHpaUzl6ZEQxMGN5OXpkVDFtWVd4elpTOXliajFtWVd4elpTOHcKV1RBVEJnY3Foa2pPUFFJQkJnZ3Foa2pPUFFNQkJ3TkNBQVN4azFSNExJNVAzaTUxWEU3clY2dFJZK2Z2a2dVegppTyswQTl0aEpTZXJIOEtOWFp5b05HWkNiVkVhK2EwRys2R2xuQXo2VjVrWFk1RTdTSVV1T2hmQ280R2VNSUdiCk1BNEdBMVVkRHdFQi93UUVBd0lGb0RBVEJnTlZIU1VFRERBS0JnZ3JCZ0VGQlFjREFqQjBCZ05WSFJFRWJUQnIKZ21saFBUWnJiakF6TURJdmJ6MDJhMjV5TnpReUwzQTljbmd5T0c5dGJDOTFQWFpwYW1GNWMyRnRZVzUwYUdGdwpkWEpwTFRZMGNtRm1ZWGt0TkRaamJ5OXBjejFtWVd4elpTOWxjejFtWVd4elpTOXpkRDEwY3k5emRUMW1ZV3h6ClpTOXliajFtWVd4elpTOHdDZ1lJS29aSXpqMEVBd0lEU1FBd1JnSWhBT21YWERZNVRIN1ZoT1pNdk9ZSTMyQlYKdWJmQXk0VnhuSVc3cU55Q3NnSHlBaUVBbEN1cEhzUnowN1hraGxiMWtKZEtpdk5vTFVCSDlpQlZvdFQrcjYwWQpqaHM9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+              client-key-data: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSU8xKzQzNXZmSVVaTUI2dGdWK0Y2S1hwdHN2MVZXbTRxT0h0L3RVc0ZmNVlvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFc1pOVWVDeU9UOTR1ZFZ4TzYxZXJVV1BuNzVJRk00anZ0QVBiWVNVbnF4L0NqVjJjcURSbQpRbTFSR3ZtdEJ2dWhwWndNK2xlWkYyT1JPMGlGTGpvWHdnPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo=

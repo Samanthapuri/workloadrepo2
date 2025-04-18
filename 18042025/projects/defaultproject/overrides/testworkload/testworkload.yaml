@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cd-agent-6kn0w42
+patch:
+- op: replace
+  path: /spec/template/spec/containers/0/resources/limits/cpu
+  value: 1
+- op: replace
+  path: /spec/template/spec/containers/0/resources/limits/memory
+  value: 600Mi
+---

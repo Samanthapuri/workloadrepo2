@@ -1,0 +1,24 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Blueprint
+metadata:
+  name: eks-bp
+  project: defaultproject
+spec:
+  base:
+    name: minimal
+    version: 2.12.0
+  customAddons:
+  - name: aws-alb
+    version: v2.11
+  - dependsOn:
+    - aws-alb
+    name: external-dns
+    version: v3
+  defaultAddons:
+    monitoring:
+      gpuOperator: {}
+  driftWebhook:
+    enabled: true
+  type: custom
+  version: v5
+  versionState: active

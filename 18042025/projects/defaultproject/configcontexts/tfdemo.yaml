@@ -1,0 +1,22 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: ConfigContext
+metadata:
+  name: tfdemo
+  project: defaultproject
+spec:
+  envs:
+  - key: RCTL_API_KEY
+    options:
+      override:
+        type: notallowed
+    value: ra2.7f6a4f0bbb60a819dd7516e77fcfdf7ebe198a71.3151950ffcc6394483f9d8c20c981a81d8c1b3f3d0d94a340a3db8aa7105611f
+  - key: RCTL_REST_ENDPOINT
+    options:
+      override:
+        type: notallowed
+    value: console.rafay.dev
+  - key: RCTL_PROJECT
+    options:
+      override:
+        type: notallowed
+    value: defaultproject

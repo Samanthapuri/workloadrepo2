@@ -1,0 +1,98 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8srequiredservicelbannotations
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sRequiredServiceLBAnnotations 
+      validation:
+        openAPIV3Schema:
+          properties:
+            requiredKeys:
+              type: array
+              items:
+                type: string
+            requiredValues:
+              type: object
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package blocksvc
+        
+        import future.keywords.if
+        import future.keywords.in
+        
+        arr_contains(arr, i) if {
+            arr[_] = i
+        }
+        
+        getRequiredAnnotationMap(s) := result if {
+            some key
+            value := s[key]
+            key == "service.beta.kubernetes.io/aws-load-balancer-attributes"
+        
+            arr := split(value, ",")
+            result := {k: v |
+                item := arr[_]
+                [k, v] := split(item, "=")
+            }
+        }
+        
+        check_for_lb_service if {
+            input.review.kind.kind == "Service"
+            input.review.object.spec.type == "LoadBalancer"
+        }
+
+        # Check for the annotation
+        violation[{"msg": msg}] {
+            check_for_lb_service
+            not input.review.object.metadata.annotations
+            msg = sprintf("Missing required annotations on service, %v", [input.review.object.metadata.name])
+        }
+
+        
+        # Check for the annotation
+        violation[{"msg": msg}] {
+            check_for_lb_service
+            not arr_contains(object.keys(input.review.object.metadata.annotations), "service.beta.kubernetes.io/aws-load-balancer-attributes")
+            msg = "Missing required annotation \"service.beta.kubernetes.io/aws-load-balancer-attributes\""
+        }
+        
+        # check for Missing Values
+        violation[{"msg": msg}] {
+            check_for_lb_service
+            d := object.keys(input.parameters.requiredValues)
+            annotation_map := getRequiredAnnotationMap(input.review.object.metadata.annotations)
+            not object.subset(object.keys(annotation_map), object.keys(input.parameters.requiredValues))
+            msg = sprintf("The keys in the \"service.beta.kubernetes.io/aws-load-balancer-attributes\" annotation contains invalid values. Required: %s", [object.keys(input.parameters.requiredValues)])
+        }
+
+        violation[{"msg": msg}] {
+            check_for_lb_service
+            annotation_map := getRequiredAnnotationMap(input.review.object.metadata.annotations)
+            not annotation_map["access_logs.s3.enabled"] == input.parameters.requiredValues["access_logs.s3.enabled"]
+            msg = sprintf("Invalid value %s for access_logs.s3.enabled in annotations \"service.beta.kubernetes.io/aws-load-balancer-attributes\"", [annotation_map["access_logs.s3.enabled"]])
+        }
+
+        violation[{"msg": msg}] {
+            check_for_lb_service
+            annotation_map := getRequiredAnnotationMap(input.review.object.metadata.annotations)
+            not annotation_map["access_logs.s3.enabled"] == input.parameters.requiredValues["access_logs.s3.enabled"]
+            msg = sprintf("Invalid value %s for access_logs.s3.enabled in annotations \"service.beta.kubernetes.io/aws-load-balancer-attributes\"", [annotation_map["access_logs.s3.enabled"]])
+        }
+
+        violation[{"msg": msg}] {
+            check_for_lb_service
+            annotation_map := getRequiredAnnotationMap(input.review.object.metadata.annotations)
+            not annotation_map["access_logs.s3.bucket"] == input.parameters.requiredValues["access_logs.s3.bucket"]
+            msg = sprintf("Invalid value %s for access_logs.s3.bucket in annotations \"service.beta.kubernetes.io/aws-load-balancer-attributes\"", [annotation_map["access_logs.s3.bucket"]])
+        }
+
+        violation[{"msg": msg}] {
+            check_for_lb_service
+            annotation_map := getRequiredAnnotationMap(input.review.object.metadata.annotations)
+            annotation_map["access_logs.s3.prefix"] == ""
+            msg = "access_logs.s3.prefix cannot have empty value in annotations \"service.beta.kubernetes.io/aws-load-balancer-attributes\""
+        }

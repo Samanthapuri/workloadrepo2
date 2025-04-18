@@ -1,0 +1,12 @@
+apiVersion: gitops.k8smgmt.io/v3
+kind: Pipeline
+metadata:
+  name: loki
+  project: defaultproject
+spec:
+  active: true
+  stages:
+  - config:
+      workload: loki
+    name: test
+    type: DeployWorkload

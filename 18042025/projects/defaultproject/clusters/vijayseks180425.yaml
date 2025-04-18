@@ -1,0 +1,75 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Cluster
+metadata:
+  labels:
+    test: testvalue
+  name: vijayseks180425
+  project: defaultproject
+spec:
+  blueprintConfig:
+    name: minimal
+  cloudCredentials: vijaysrole
+  config:
+    addons:
+    - name: aws-ebs-csi-driver
+      version: latest
+    - name: vpc-cni
+      version: latest
+    - name: kube-proxy
+      version: latest
+    - name: coredns
+      version: latest
+    iam:
+      withOIDC: true
+    metadata:
+      name: vijayseks180425
+      region: us-west-2
+      tags:
+        email: vijaysamanthapuri@rafay.co
+        env: cs-demo
+      version: "1.31"
+    network:
+      cni:
+        name: aws-cni
+        params:
+          customCniCrdSpec:
+            us-west-2a:
+            - subnet: subnet-0d2c3359d62594d32
+            us-west-2b:
+            - subnet: subnet-0e7c514426a237796
+            us-west-2c:
+            - subnet: subnet-0d03a8d56fee019e4
+    nodeGroups:
+    - amiFamily: AmazonLinux2023
+      desiredCapacity: 2
+      instanceType: t3.xlarge
+      maxPodsPerNode: 50
+      maxSize: 4
+      minSize: 0
+      name: ng-1
+      privateNetworking: true
+      subnets:
+      - subnet-0b5454e3766e256cf
+      - subnet-0c2ace7c1bd6f389d
+      - subnet-01191eb45bbc20289
+      tags:
+        email: vijaysamanthapuri@rafay.co
+        env: cs-demo
+      version: "1.31"
+      volumeEncrypted: false
+      volumeSize: 80
+      volumeType: gp3
+    vpc:
+      autoAllocateIPv6: false
+      clusterEndpoints:
+        privateAccess: true
+        publicAccess: true
+      subnets:
+        private:
+          private-01:
+            id: subnet-01191eb45bbc20289
+          private-02:
+            id: subnet-0c2ace7c1bd6f389d
+          private-03:
+            id: subnet-0b5454e3766e256cf
+  type: aws-eks

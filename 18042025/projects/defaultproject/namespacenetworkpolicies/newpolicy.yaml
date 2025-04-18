@@ -1,0 +1,10 @@
+apiVersion: security.k8smgmt.io/v3
+kind: NamespaceNetworkPolicy
+metadata:
+  name: newpolicy
+  project: defaultproject
+spec:
+  rules:
+  - name: nsrule
+    version: v1
+  version: v1

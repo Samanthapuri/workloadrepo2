@@ -1,0 +1,15 @@
+apiVersion: apps.k8smgmt.io/v3
+kind: Workload
+metadata:
+  name: testwlenv
+  project: defaultproject
+spec:
+  artifact:
+    artifact:
+      paths:
+      - name: file://artifacts/testwlenv/testwlenv.yaml
+    type: Yaml
+  namespace: defaultns
+  placement:
+    selector: rafay.dev/clusterName=vijays03172025
+  version: testwlenv-v16-202503261921310000

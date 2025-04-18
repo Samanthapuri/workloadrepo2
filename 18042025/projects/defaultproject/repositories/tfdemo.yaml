@@ -1,0 +1,26 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: tfdemo
+  project: defaultproject
+spec:
+  agents:
+  - name: tfdemo
+  credentials:
+    password: sealed://credentials.password
+    username: samanthapuri
+  endpoint: https://github.com/Samanthapuri/tfdemo.git
+  options: {}
+  secret:
+    name: file://artifacts/tfdemo/sealed-secret.yaml
+  type: Git
+status:
+  agents:
+  - id: dk6eq0m
+    name: tfdemo
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: keo1vz2
+  webhookConfig:
+    webhookSecret: 4b5f5911e97e0366b280b3f7fc88ea0122cd724bd203454fb4069b59006ff495
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/keo1vz2

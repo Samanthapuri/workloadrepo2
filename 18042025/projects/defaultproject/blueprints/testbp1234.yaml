@@ -1,0 +1,24 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Blueprint
+metadata:
+  name: testbp1234
+  project: defaultproject
+spec:
+  base:
+    name: default
+    version: 2.6.0
+  defaultAddons:
+    enableIngress: true
+    enableMonitoring: true
+  driftWebhook:
+    enabled: true
+  networkPolicy:
+    policies:
+    - name: testv1
+      version: v1
+    profile:
+      name: default
+      version: latest
+  type: custom
+  version: v2
+  versionState: active

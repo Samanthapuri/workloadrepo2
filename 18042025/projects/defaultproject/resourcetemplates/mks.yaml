@@ -1,0 +1,82 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: ResourceTemplate
+metadata:
+  name: mks
+  project: defaultproject
+spec:
+  agents:
+  - name: nutanix
+  contexts:
+  - name: mks
+  provider: terraform
+  providerOptions:
+    terraform:
+      backendType: system
+      refresh: true
+  repositoryOptions:
+    branch: main
+    directoryPath: nutanix/amgen/mks
+    name: nutanix-repo
+  variables:
+  - name: cluster_name
+    options:
+      override:
+        type: allowed
+    value: $("\(environment.name)")$
+    valueType: expression
+  - name: cluster_project
+    options:
+      override:
+        type: allowed
+    value: defaultproject
+    valueType: text
+  - name: cluster_blueprint_name
+    options:
+      override:
+        type: allowed
+    value: minimal
+    valueType: text
+  - name: cluster_blueprint_version
+    options:
+      override:
+        type: allowed
+    value: 2.7.0
+    valueType: text
+  - name: cluster_dedicated_masters
+    options:
+      override:
+        type: allowed
+    value: "true"
+    valueType: json
+  - name: cluster_kubernetes_version
+    options:
+      override:
+        type: allowed
+    value: v1.29.0
+    valueType: text
+  - name: cluster_ha
+    options:
+      override:
+        type: allowed
+    value: "true"
+    valueType: json
+  - name: cluster_location
+    options:
+      override:
+        type: allowed
+    value: newyorkcity-us
+    valueType: text
+  - name: master_ips
+    options:
+      override:
+        type: notallowed
+    value: $(resource."nutanix-vm".output.master_ips.value)$
+    valueType: expression
+  - name: worker_ips
+    options:
+      override:
+        type: notallowed
+    value: $(resource."nutanix-vm".output.worker_ips.value)$
+    valueType: expression
+  version: v1
+  versionState: draft

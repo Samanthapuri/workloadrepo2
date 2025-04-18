@@ -1,0 +1,26 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: EnvironmentTemplate
+metadata:
+  name: optouttest
+  project: defaultproject
+spec:
+  agents:
+  - name: tfdemo
+  resources:
+  - kind: resourcetemplate
+    name: optouttest
+    resourceOptions:
+      version: v3
+    type: dynamic
+  schedules:
+  - cadence:
+      cronExpression: '*/20 * * * *'
+      cronTimezone: Europe/London
+    name: testschedule
+    optOutOptions:
+      allowOptOut: true
+      maxAllowedDuration: 1000h
+      maxAllowedTimes: 1000
+    type: deploy
+  version: v5
+  versionState: active

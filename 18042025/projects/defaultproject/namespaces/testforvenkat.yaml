@@ -1,0 +1,10 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: testforvenkat
+  name: testforvenkat
+  project: defaultproject
+spec:
+  namespaceMeshPolicyParams: {}
+  networkPolicyParams: {}

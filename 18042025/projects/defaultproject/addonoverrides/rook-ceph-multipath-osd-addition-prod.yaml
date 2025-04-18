@@ -1,0 +1,20 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: AddonOverride
+metadata:
+  labels:
+    rafay.dev/overrideScope: clusterLabels
+    rafay.dev/overrideType: valuesFile
+  name: rook-ceph-multipath-osd-addition-prod
+  project: defaultproject
+spec:
+  placement:
+    labels:
+    - key: rafay.dev/clusterName
+      value: vijaysrookceph
+  resource:
+    selector:
+      selector: rafay.dev/system=true,rafay.dev/component=rook-ceph
+    type: Addon
+  type: Helm
+  valuesPath:
+    name: file://rook-ceph-multipath-osd-addition-prod/rook-ceph-multipath-osd-addition-prod.yaml

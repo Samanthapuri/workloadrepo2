@@ -1,0 +1,18 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: cert-manager
+  project: defaultproject
+spec:
+  agents:
+  - {}
+  endpoint: https://charts.jetstack.io
+  options: {}
+  type: Helm
+status:
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: kongqym
+  webhookConfig:
+    webhookSecret: c208ca2778f2552f4618d17631e82d8bd1b6ead6686dfc3c5a7744313b169e4a
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/kongqym

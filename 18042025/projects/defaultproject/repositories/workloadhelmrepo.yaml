@@ -1,0 +1,21 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: workloadhelmrepo
+  project: defaultproject
+spec:
+  agents:
+  - name: eksagent
+  endpoint: https://helm.github.io/examples
+  options: {}
+  type: Helm
+status:
+  agents:
+  - id: 3mx5q72
+    name: eksagent
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: 2drzpgk
+  webhookConfig:
+    webhookSecret: 58d7015dd942806cb5ca03ee506d06938b7b736d82de67bd32be5a23b676955c
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/2drzpgk

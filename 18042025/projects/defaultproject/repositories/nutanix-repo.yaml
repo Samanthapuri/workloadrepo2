@@ -1,0 +1,21 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: nutanix-repo
+  project: defaultproject
+spec:
+  credentials:
+    password: sealed://credentials.password
+    username: vijays-rafay
+  endpoint: https://github.com/vijays-rafay/nutanix-cluster.git
+  options: {}
+  secret:
+    name: file://artifacts/nutanix-repo/sealed-secret.yaml
+  type: Git
+status:
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: k5n8z7k
+  webhookConfig:
+    webhookSecret: 295be3edc00223d381f67c79d78c766ea304410a06c96d8ebabea97afbce8995
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/k5n8z7k

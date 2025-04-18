@@ -1,0 +1,26 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: workloadrepo15
+  project: defaultproject
+spec:
+  agents:
+  - name: eksagent
+  credentials:
+    password: sealed://credentials.password
+    username: samanthapuri
+  endpoint: https://github.com/Samanthapuri/workloadrepo15.git
+  options: {}
+  secret:
+    name: file://artifacts/workloadrepo15/sealed-secret.yaml
+  type: Git
+status:
+  agents:
+  - id: 3mx5q72
+    name: eksagent
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: kgr18jm
+  webhookConfig:
+    webhookSecret: 52ce98ee91d2ecd982d5bf2d167cece635732efc20b21c1872238bd19ba9d589
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/kgr18jm

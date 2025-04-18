@@ -1,0 +1,13 @@
+apiVersion: apps.k8smgmt.io/v3
+kind: Catalog
+metadata:
+  name: rafay-demo-catalog
+  project: defaultproject
+spec:
+  autoSync: true
+  repository: rafaycatalog-helm
+  sharing:
+    enabled: true
+    projects:
+    - name: '*'
+  type: HelmRepository

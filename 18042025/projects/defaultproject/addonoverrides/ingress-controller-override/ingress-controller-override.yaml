@@ -1,0 +1,57 @@
+imagePullSecrets: {}
+
+installation:
+  enabled: true
+  kubernetesProvider: ""
+  registry: registry.rafay-edge.net
+  imagePath: rafay/calico
+  calicoNetwork: 
+    nodeAddressAutodetectionV4:
+      cidrs: [10.0.0.0/16]
+    ipPools:
+    - cidr: 10.244.0.0/16
+      encapsulation: VXLAN
+    bgp: Disabled
+
+apiServer:
+  enabled: false
+
+certs:
+  node:
+    key:
+    cert:
+    commonName:
+  typha:
+    key:
+    cert:
+    commonName:
+    caBundle:
+
+# Resource requests and limits for the tigera/operator pod.
+resources: {}
+
+# Tolerations for the tigera/operator pod.
+tolerations:
+- effect: NoExecute
+  operator: Exists
+- effect: NoSchedule
+  operator: Exists
+
+# NodeSelector for the tigera/operator pod.
+nodeSelector:
+  kubernetes.io/os: linux
+
+# Custom annotations for the tigera/operator pod.
+podAnnotations: {}
+
+# Custom labels for the tigera/operator pod.
+podLabels: {}
+
+# Image and registry configuration for the tigera/operator pod.
+tigeraOperator:
+  image: rafay/calico/operator
+  version: v1.28.5
+  registry: registry.rafay-edge.net 
+calicoctl:
+  image: registry.rafay-edge.net/rafay/calico/ctl
+  tag: v3.24.5

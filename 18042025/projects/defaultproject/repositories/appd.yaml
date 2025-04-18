@@ -1,0 +1,18 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: appd
+  project: defaultproject
+spec:
+  agents:
+  - {}
+  endpoint: https://appdynamics.jfrog.io/artifactory/appdynamics-cloud-helmcharts/
+  options: {}
+  type: Helm
+status:
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: k3dqo82
+  webhookConfig:
+    webhookSecret: 7c4b2bdf8e67bf9b6b8e2abb142a4c40e41b9e4391d323cb8c89cae2cbf7ca78
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/k3dqo82

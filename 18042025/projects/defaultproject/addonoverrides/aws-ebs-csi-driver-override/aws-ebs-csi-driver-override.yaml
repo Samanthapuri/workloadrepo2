@@ -1,0 +1,6 @@
+controller:
+  replicaCount: 0
+node:
+    nodeSelector:
+      kubernetes.io/os: no-node
+storageClasses: {}

@@ -1,0 +1,18 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: aws-alb
+  project: defaultproject
+spec:
+  agents:
+  - {}
+  endpoint: https://aws.github.io/eks-charts
+  options: {}
+  type: Helm
+status:
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: m1vyywm
+  webhookConfig:
+    webhookSecret: 27e7c84f785ee34698009d82e3f8e18e5b9d773fa69588c96ef7a2ff73c1cebf
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/m1vyywm

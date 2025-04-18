@@ -1,0 +1,10 @@
+apiVersion: opa.k8smgmt.io/v3
+kind: OPAPolicy
+metadata:
+  name: testpolicy
+  project: defaultproject
+spec:
+  constraintList:
+  - name: host-filesystem
+    version: version-1702463662
+  version: v1

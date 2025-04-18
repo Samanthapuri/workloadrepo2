@@ -1,0 +1,45 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: ResourceTemplate
+metadata:
+  name: optouttest
+  project: defaultproject
+spec:
+  hooks:
+    onSuccess:
+    - agents:
+      - name: tfdemo
+      name: posthook
+      onFailure: unspecified
+      options: {}
+      type: workflowHandler
+      workflowHandler:
+        name: testdriver
+    provider:
+      terraform:
+        deploy:
+          apply: {}
+          init: {}
+          output: {}
+          plan: {}
+        destroy:
+          destroy: {}
+          init: {}
+          plan: {}
+  provider: terraform
+  providerOptions:
+    terraform:
+      backendType: system
+  repositoryOptions:
+    branch: main
+    directoryPath: test
+    name: tfdemo
+  variables:
+  - name: username
+    options:
+      override:
+        type: allowed
+      required: true
+    value: vijays
+    valueType: text
+  version: v3
+  versionState: draft

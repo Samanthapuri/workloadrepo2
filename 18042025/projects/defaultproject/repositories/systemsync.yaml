@@ -1,0 +1,30 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: systemsync
+  project: defaultproject
+spec:
+  agents:
+  - name: tfdemo
+  - name: tfdemolatest
+  credentials:
+    password: sealed://credentials.password
+    username: samanthapuri
+  endpoint: https://github.com/Samanthapuri/rafaysyssync.git
+  options:
+    provider: Github
+  secret:
+    name: file://artifacts/systemsync/sealed-secret.yaml
+  type: Git
+status:
+  agents:
+  - id: dk6eq0m
+    name: tfdemo
+  - id: dk6o7gk
+    name: tfdemolatest
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: k6l6vwk
+  webhookConfig:
+    webhookSecret: 5a5e14523ff703b5951a356ad3855f7f524b4d058cf8f93fc22a78d941188796
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/k6l6vwk

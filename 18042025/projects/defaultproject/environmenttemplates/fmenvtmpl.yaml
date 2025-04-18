@@ -1,0 +1,14 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: EnvironmentTemplate
+metadata:
+  name: fmenvtmpl
+  project: defaultproject
+spec:
+  resources:
+  - kind: resourcetemplate
+    name: fmtest
+    resourceOptions:
+      version: v1
+    type: dynamic
+  version: v1
+  versionState: active

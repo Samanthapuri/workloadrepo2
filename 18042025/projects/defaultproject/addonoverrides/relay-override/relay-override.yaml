@@ -1,0 +1,9 @@
+relay:
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+  config:
+    minDialouts: 30
+    maxDialouts: 200
+    streamsPerDialout: 5

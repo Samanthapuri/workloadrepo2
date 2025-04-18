@@ -1,0 +1,12 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: FleetPlan
+metadata:
+  name: test
+  project: defaultproject
+spec:
+  fleet:
+    kind: clusters
+    labels:
+      rafay.dev/clusterName: vijaysrookceph
+    projects:
+    - name: defaultproject

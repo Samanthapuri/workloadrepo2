@@ -1,0 +1,23 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: EnvironmentTemplate
+metadata:
+  name: nutanix-cluster
+  project: defaultproject
+spec:
+  agents:
+  - name: nutanix
+  resources:
+  - kind: resourcetemplate
+    name: nutanix-vm
+    resourceOptions:
+      version: v1
+    type: dynamic
+  - dependsOn:
+    - name: nutanix-vm
+    kind: resourcetemplate
+    name: mks
+    resourceOptions:
+      version: v1
+    type: dynamic
+  version: v1
+  versionState: draft

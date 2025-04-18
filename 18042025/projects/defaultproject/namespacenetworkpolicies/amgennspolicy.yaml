@@ -1,0 +1,10 @@
+apiVersion: security.k8smgmt.io/v3
+kind: NamespaceNetworkPolicy
+metadata:
+  name: amgennspolicy
+  project: defaultproject
+spec:
+  rules:
+  - name: amgennsrule
+    version: v2
+  version: v2

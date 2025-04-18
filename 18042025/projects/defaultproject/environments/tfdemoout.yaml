@@ -1,0 +1,31 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: Environment
+metadata:
+  name: tfdemoout
+  project: defaultproject
+spec:
+  agents:
+  - name: tfdemo
+  secret:
+    name: file://artifacts/tfdemoout/sealed-secret.yaml
+  template:
+    name: optouttest
+    version: v3
+    versionState: unspecified
+  variables:
+  - name: username
+    options:
+      override:
+        type: allowed
+      required: true
+    value: test123456
+    valueType: text
+  - name: password
+    options:
+      mask: true
+      override:
+        type: allowed
+      required: true
+      sensitive: true
+    value: sealed://variables.1.
+    valueType: text

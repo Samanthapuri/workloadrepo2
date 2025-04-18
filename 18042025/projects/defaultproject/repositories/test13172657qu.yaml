@@ -1,0 +1,15 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: test13172657qu
+  project: defaultproject
+spec:
+  options: {}
+  type: Helm
+status:
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: kr5e3zm
+  webhookConfig:
+    webhookSecret: 74441274ade98cec37f7f515deb872f6115acc2f2d4fac5134bb25fa7bd688da
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/kr5e3zm

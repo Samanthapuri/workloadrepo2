@@ -1,0 +1,23 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: Environment
+metadata:
+  name: amrish-env1
+  project: defaultproject
+spec:
+  agents:
+  - name: tfdemo
+  schedule_optouts:
+  - duration: 59m
+    name: testschedule1
+  template:
+    name: amrish-env-template1
+    version: v1
+    versionState: unspecified
+  variables:
+  - name: username
+    options:
+      override:
+        type: allowed
+      required: true
+    value: amrish2
+    valueType: text

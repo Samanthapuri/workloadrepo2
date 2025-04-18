@@ -1,0 +1,25 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: AddonOverride
+metadata:
+  labels:
+    rafay.dev/overrideScope: clusterLabels
+    rafay.dev/overrideType: valuesFile
+  name: ingress-controller-override
+  project: defaultproject
+spec:
+  placement:
+    labels:
+    - key: rafay.dev/clusterName
+      value: CLUSTER_1
+    - key: rafay.dev/clusterName
+      value: CLUSTER_2
+    - key: rafay.dev/clusterName
+      value: CLUSTER_3
+  resource:
+    selector:
+      name: rafay.dev/system=true
+      selector: rafay.dev/component=v2-ingress-infra
+    type: Addon
+  type: Helm
+  valuesPath:
+    name: file://ingress-controller-override/ingress-controller-override.yaml

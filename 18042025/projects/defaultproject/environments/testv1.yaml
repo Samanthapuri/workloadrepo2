@@ -1,0 +1,21 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: Environment
+metadata:
+  name: testv1
+  project: defaultproject
+spec:
+  schedule_optouts:
+  - duration: 21m
+    name: testschedule
+  template:
+    name: optouttest
+    version: v5
+    versionState: unspecified
+  variables:
+  - name: username
+    options:
+      override:
+        type: allowed
+      required: true
+    value: vijays
+    valueType: text

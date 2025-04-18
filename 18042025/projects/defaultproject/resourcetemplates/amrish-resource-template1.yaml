@@ -1,0 +1,34 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: ResourceTemplate
+metadata:
+  name: amrish-resource-template1
+  project: defaultproject
+spec:
+  hooks:
+    onSuccess:
+    - agents:
+      - name: tfdemo
+      name: posthook
+      onFailure: unspecified
+      options: {}
+      type: workflowHandler
+      workflowHandler:
+        name: amrish-testdriver
+  provider: terraform
+  providerOptions:
+    terraform:
+      backendType: system
+  repositoryOptions:
+    branch: main
+    directoryPath: test
+    name: tfdemo
+  variables:
+  - name: username
+    options:
+      override:
+        type: allowed
+      required: true
+    value: amrish
+    valueType: text
+  version: v1
+  versionState: active

@@ -1,0 +1,18 @@
+apiVersion: apps.k8smgmt.io/v3
+kind: Workload
+metadata:
+  name: fmtest
+  project: defaultproject
+spec:
+  artifact:
+    artifact:
+      chartPath:
+        name: file://artifacts/fmtest/fmtestchart-0.1.0.tgz
+    options:
+      maxHistory: 10
+      timeout: 15m0s
+      wait: true
+    type: Helm
+  namespace: defaultns
+  placement:
+    selector: rafay.dev/clusterName=rafay-jdev-lab

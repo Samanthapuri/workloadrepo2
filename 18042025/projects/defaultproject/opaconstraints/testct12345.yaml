@@ -1,0 +1,15 @@
+apiVersion: opa.k8smgmt.io/v3
+kind: OPAConstraint
+metadata:
+  name: testct12345
+  project: defaultproject
+spec:
+  artifact:
+    artifact:
+      paths:
+      - name: file://artifacts/testct12345/const-svc.yaml
+    options: {}
+    type: Yaml
+  published: true
+  templateName: testct123456
+  version: v1

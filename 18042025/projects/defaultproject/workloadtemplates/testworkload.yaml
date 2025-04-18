@@ -1,0 +1,14 @@
+apiVersion: apps.k8smgmt.io/v3
+kind: WorkloadTemplate
+metadata:
+  name: testworkload
+  project: defaultproject
+spec:
+  artifact:
+    artifact:
+      paths:
+      - name: deploy-green.yaml
+      repository: myrepo
+      revision: master
+    options: {}
+    type: Yaml

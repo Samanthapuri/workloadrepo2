@@ -1,0 +1,16 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Blueprint
+metadata:
+  name: rookonly
+  project: defaultproject
+spec:
+  base:
+    name: default-upstream
+    version: 2.9.0
+  defaultAddons:
+    enableRookCeph: true
+  driftWebhook:
+    enabled: true
+  type: custom
+  version: v2
+  versionState: active

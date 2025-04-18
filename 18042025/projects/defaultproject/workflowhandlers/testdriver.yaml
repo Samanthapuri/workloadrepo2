@@ -1,0 +1,26 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: WorkflowHandler
+metadata:
+  name: testdriver
+  project: defaultproject
+spec:
+  config:
+    container:
+      arguments:
+      - $(--input=\(json.Marshal(resource."optouttest".output.dummyoutput.value)))$
+      - ${rafay_resource_template.optouttest0].metadata[0].name}
+      commands:
+      - echo
+      cpuLimitMilli: "100"
+      envVars:
+        TESTKEY: sealed://WorkflowHandlerconfig.container.envs.TESTKEY
+      image: nginx:latest
+      imagePullCredentials:
+        password: sealed://registry_credentials
+        username: vijaysamanthapuri@rafay.co
+      memoryLimitMb: "100"
+    maxRetryCount: 3
+    timeoutSeconds: 100
+    type: container
+  secret:
+    name: file://artifacts/testdriver/sealed-secret.yaml

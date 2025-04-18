@@ -1,0 +1,2 @@
+hostpathClass:
+  basePath: "/var/lib/customdata"

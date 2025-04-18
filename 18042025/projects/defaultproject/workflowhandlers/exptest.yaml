@@ -1,0 +1,16 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: WorkflowHandler
+metadata:
+  name: exptest
+  project: defaultproject
+spec:
+  config:
+    container:
+      arguments:
+      - $(--input=\(json.Marshal(resource."exptest".output.dummyoutput.value)))$
+      commands:
+      - echo
+      image: nginx:latest
+    maxRetryCount: 3
+    timeoutSeconds: 100
+    type: container

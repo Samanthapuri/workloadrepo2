@@ -1,0 +1,7 @@
+cephFileSystems:
+  - name: ceph-filesystem
+    spec:
+      dataPools:
+      - failureDomain: host
+        replicated:
+          size: 2

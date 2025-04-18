@@ -1,0 +1,20 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Blueprint
+metadata:
+  name: withoutpromadapter
+  project: defaultproject
+spec:
+  base:
+    name: default
+    version: 2.6.0
+  defaultAddons:
+    enableIngress: true
+    enableMonitoring: true
+    monitoring:
+      prometheusAdapter:
+        customizationEnabled: true
+  driftWebhook:
+    enabled: true
+  type: custom
+  version: v1
+  versionState: active

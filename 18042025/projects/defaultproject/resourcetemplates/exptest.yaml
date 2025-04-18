@@ -1,0 +1,17 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: ResourceTemplate
+metadata:
+  name: exptest
+  project: defaultproject
+spec:
+  provider: terraform
+  providerOptions:
+    terraform:
+      backendType: system
+      version: v1.4.4
+  repositoryOptions:
+    branch: main
+    directoryPath: test
+    name: tfdemo
+  version: v1
+  versionState: active

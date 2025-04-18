@@ -1,0 +1,132 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: ResourceTemplate
+metadata:
+  name: nutanix-vm
+  project: defaultproject
+spec:
+  agents:
+  - name: nutanix
+  provider: terraform
+  providerOptions:
+    terraform:
+      backendType: system
+      refresh: true
+  repositoryOptions:
+    branch: main
+    directoryPath: nutanix/amgen/vm/
+    name: nutanix-repo
+  secret:
+    name: file://artifacts/nutanix-vm/sealed-secret.yaml
+  variables:
+  - name: vm_prefix
+    options:
+      override:
+        type: allowed
+      required: true
+    value: demo
+    valueType: text
+  - name: subnet_name
+    options:
+      override:
+        type: allowed
+    value: Primary
+    valueType: text
+  - name: subnet_uuid
+    options:
+      override:
+        type: allowed
+    value: 9fc7fe95-e18b-44ee-92bb-c51a06d58044
+    valueType: text
+  - name: username
+    options:
+      mask: true
+      override:
+        type: allowed
+      sensitive: true
+    value: sealed://variables.3.
+    valueType: text
+  - name: password
+    options:
+      mask: true
+      override:
+        type: allowed
+      sensitive: true
+    value: sealed://variables.4.
+    valueType: text
+  - name: nutanix_endpoint
+    options:
+      override:
+        type: allowed
+    value: 10.38.252.39
+    valueType: text
+  - name: nutanix_port
+    options:
+      override:
+        type: allowed
+    value: "9440"
+    valueType: text
+  - name: cluster_uuid
+    options:
+      override:
+        type: allowed
+    value: 00061e2d-4f4b-0039-0afe-9440c97b55c4
+    valueType: text
+  - name: num_sockets
+    options:
+      override:
+        type: allowed
+      required: true
+    value: "2"
+    valueType: text
+  - name: vcpus_per_socket
+    options:
+      override:
+        type: allowed
+      required: true
+    value: "2"
+    valueType: text
+  - name: memory_in_mb
+    options:
+      override:
+        type: allowed
+      required: true
+    value: "4096"
+    valueType: text
+  - name: template_uuid
+    options:
+      override:
+        type: allowed
+      required: true
+    value: 0afc5780-42c9-4e5a-a4df-dbb76c8e55d5
+    valueType: text
+  - name: template_name
+    options:
+      override:
+        type: allowed
+      required: true
+    value: vijaysvm
+    valueType: text
+  - name: ssh_public_key
+    options:
+      mask: true
+      override:
+        type: allowed
+      sensitive: true
+    value: sealed://variables.13.
+    valueType: text
+  - name: masters
+    options:
+      override:
+        type: allowed
+      required: true
+    value: (["master-0", "master-1", "master-2"])
+    valueType: hcl
+  - name: workers
+    options:
+      override:
+        type: allowed
+      required: true
+    value: (["worker-0", "worker-1", "worker-2"])
+    valueType: hcl
+  version: v1
+  versionState: draft

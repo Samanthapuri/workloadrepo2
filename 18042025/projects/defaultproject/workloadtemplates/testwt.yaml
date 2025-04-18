@@ -1,0 +1,18 @@
+apiVersion: apps.k8smgmt.io/v3
+kind: WorkloadTemplate
+metadata:
+  name: testwt
+  project: defaultproject
+spec:
+  artifact:
+    artifact:
+      chartPath:
+        name: charts/hello-world
+      repository: helmsample
+      revision: main
+      valuesPaths:
+      - name: charts/hello-world/values.yaml
+    options:
+      maxHistory: 10
+      timeout: 5m0s
+    type: Helm

@@ -1,0 +1,14 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: SecretProviderClass
+metadata:
+  name: ankit
+  project: defaultproject
+spec:
+  artifact:
+    artifact:
+      paths:
+      - name: file://artifacts/ankit/kubeconfig-ankit@rafay.co.yaml
+    options: {}
+    type: Yaml
+  provider: AWS
+  sharing: {}

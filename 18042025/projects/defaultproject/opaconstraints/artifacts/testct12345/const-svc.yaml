@@ -1,0 +1,14 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sRequiredServiceLBAnnotations
+metadata:
+  name: must-contain-access-logs
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Service"]
+  parameters:
+    requiredValues:
+      "access_logs.s3.enabled": "true"
+      "access_logs.s3.bucket": "logs-prod-elblogs-useast1-bucke"
+      "access_logs.s3.prefix": "my-app"

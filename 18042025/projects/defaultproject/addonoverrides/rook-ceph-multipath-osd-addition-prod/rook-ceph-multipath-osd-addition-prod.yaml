@@ -1,0 +1,145 @@
+rook-ceph-cluster:
+  cephClusterSpec:
+    storage:
+      config:
+        encryptedDevice: "false"
+      devices:
+      - config:
+          encryptedDevice: "false"
+        fullpath: /dev/mapper/rookvg-rooklv
+        name: /dev/mapper/rookvg-rooklv
+      - config:
+          encryptedDevice: "true"
+        fullpath: /dev/sdc
+        name: /dev/sdc
+      - config:
+          encryptedDevice: "false"
+        fullpath: /dev/mapper/rookvg-rooklv1
+        name: /dev/mapper/rookvg-rooklv1
+      useAllDevices: false
+      useAllNodes: true
+  cephFileSystems:
+    - name: ceph-filesystem
+      spec:
+        dataPools:
+          - failureDomain: host
+            replicated:
+              size: 2
+            parameters:
+              min_size: "1"
+        metadataPool:
+          replicated:
+            size: 3
+        metadataServer:
+          activeCount: 1
+          activeStandby: true
+          placement:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: role
+                        operator: In
+                        values:
+                          - storage
+                      - key: storage
+                        operator: In
+                        values:
+                          - rook-ceph
+                      - key: kubernetes.io/os
+                        operator: In
+                        values:
+                          - linux
+      storageClass:
+        allowVolumeExpansion: true
+        enabled: true
+        isDefault: false
+        mountOptions: []
+        name: rook-cephfs
+        parameters:
+          csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/controller-expand-secret-namespace: rafay-infra
+          csi.storage.k8s.io/fstype: ext4
+          csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+          csi.storage.k8s.io/node-stage-secret-namespace: rafay-infra
+          csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+          csi.storage.k8s.io/provisioner-secret-namespace: rafay-infra
+        reclaimPolicy: Delete
+  cephObjectStores:
+    - name: ceph-objectstore
+      spec:
+        dataPool:
+          replicated:
+            size: 2
+          parameters:
+            min_size: "1"
+        gateway:
+          instances: 1
+          placement:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: role
+                        operator: In
+                        values:
+                          - storage
+                      - key: storage
+                        operator: In
+                        values:
+                          - rook-ceph
+                      - key: kubernetes.io/os
+                        operator: In
+                        values:
+                          - linux
+          port: 80
+        healthCheck:
+          bucket:
+            disabled: true
+            interval: 60s
+          livenessProbe:
+            disabled: true
+            failureThreshold: 4
+            periodSeconds: 5
+          readinessProbe:
+            disabled: true
+            failureThreshold: 2
+            periodSeconds: 5
+          startupProbe:
+            disabled: true
+        metadataPool:
+          failureDomain: host
+          replicated:
+            size: 3
+        preservePoolsOnDelete: true
+      storageClass:
+        enabled: true
+        name: rook-ceph-delete-bucket
+        parameters:
+          region: us-east-1
+        reclaimPolicy: Delete
+  cephBlockPools:
+    - name: ceph-blockpool
+      spec:
+        failureDomain: host
+        replicated:
+          size: 2
+        parameters:
+          min_size: "1"
+      storageClass:
+        allowVolumeExpansion: true
+        enabled: true
+        isDefault: true
+        mountOptions: []
+        name: rook-ceph-block
+        parameters:
+          csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+          csi.storage.k8s.io/controller-expand-secret-namespace: rafay-infra
+          csi.storage.k8s.io/fstype: ext4
+          csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+          csi.storage.k8s.io/node-stage-secret-namespace: rafay-infra
+          csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+          csi.storage.k8s.io/provisioner-secret-namespace: rafay-infra
+          imageFeatures: layering
+          imageFormat: "2"
+        reclaimPolicy: Delete

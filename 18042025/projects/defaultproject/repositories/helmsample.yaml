@@ -1,0 +1,26 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: helmsample
+  project: defaultproject
+spec:
+  agents:
+  - name: tfdemo
+  credentials:
+    password: sealed://credentials.password
+    username: samanthapuri
+  endpoint: https://github.com/Samanthapuri/helloworld.git
+  options: {}
+  secret:
+    name: file://artifacts/helmsample/sealed-secret.yaml
+  type: Git
+status:
+  agents:
+  - id: dk6eq0m
+    name: tfdemo
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: 2wn1we2
+  webhookConfig:
+    webhookSecret: 35013117d46755014e050191f76b5a60a841a56b21dbdc4fcff10885352d94bc
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/2wn1we2

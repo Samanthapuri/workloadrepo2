@@ -1,0 +1,21 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: WorkflowHandler
+metadata:
+  name: amrish-testdriver
+  project: defaultproject
+spec:
+  config:
+    container:
+      arguments:
+      - $(--input=\(json.Marshal(resource."amrish-resource-template1".output.dummyoutput.value)))$
+      - ${rafay_resource_template.amrish-resource-template1[0].metadata[0].name}
+      commands:
+      - echo
+      cpuLimitMilli: "100"
+      envVars:
+        TESTKEY: sealed://WorkflowHandlerconfig.container.envs.TESTKEY
+      image: nginx:latest
+      memoryLimitMb: "100"
+    type: container
+  secret:
+    name: file://artifacts/amrish-testdriver/sealed-secret.yaml

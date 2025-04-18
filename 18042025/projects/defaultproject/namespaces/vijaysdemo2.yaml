@@ -1,0 +1,26 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: vijaysdemo2
+  name: vijaysdemo2
+  project: defaultproject
+spec:
+  drift:
+    action: Deny
+    enabled: true
+  limitRange:
+    container: {}
+    pod: {}
+  namespaceMeshPolicyParams: {}
+  placement:
+    labels:
+    - key: rafay.dev/clusterName
+      value: eks-cluster-vijays-09032023
+    - key: rafay.dev/clusterName
+      value: eks-gitops-logging-vijays56
+    - key: rafay.dev/clusterName
+      value: eks-gitops-target-vijays
+    - key: rafay.dev/clusterName
+      value: vijayspermissiontest
+  resourceQuotas: {}

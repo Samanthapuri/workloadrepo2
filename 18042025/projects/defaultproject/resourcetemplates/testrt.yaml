@@ -1,0 +1,8 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: ResourceTemplate
+metadata:
+  name: testrt
+  project: defaultproject
+spec:
+  provider: unspecified
+  versionState: unspecified

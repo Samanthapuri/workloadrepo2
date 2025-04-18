@@ -1,0 +1,7 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: Resource
+metadata:
+  description: dhvajdhvams
+  name: test
+  project: defaultproject
+spec: {}

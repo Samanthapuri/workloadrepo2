@@ -1,0 +1,21 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: lab-namespace-12
+  name: lab-namespace-12
+  project: defaultproject
+spec:
+  drift:
+    action: Deny
+    enabled: true
+  namespaceMeshPolicyParams: {}
+  placement:
+    labels:
+    - key: rafay.dev/clusterName
+      value: rafay-jdev-lab
+  resourceQuotas:
+    cpuLimits: 20m
+    cpuRequests: 10m
+    memoryLimits: 50Mi
+    memoryRequests: 50Mi

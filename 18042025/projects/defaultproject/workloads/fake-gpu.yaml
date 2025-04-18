@@ -1,0 +1,19 @@
+apiVersion: apps.k8smgmt.io/v3
+kind: Workload
+metadata:
+  name: fake-gpu
+  project: defaultproject
+spec:
+  artifact:
+    artifact:
+      catalog: default-helm
+      chartName: fake-gpu-operator
+      chartVersion: 0.0.59
+    options:
+      maxHistory: 10
+      timeout: 5m0s
+    type: Helm
+  namespace: defaultns
+  placement:
+    selector: rafay.dev/clusterName=vijayseks121220242
+  version: fake-gpu-v1-202501212236560000

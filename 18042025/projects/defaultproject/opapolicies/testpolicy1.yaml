@@ -1,0 +1,10 @@
+apiVersion: opa.k8smgmt.io/v3
+kind: OPAPolicy
+metadata:
+  name: testpolicy1
+  project: defaultproject
+spec:
+  constraintList:
+  - name: testct12345
+    version: v1
+  version: v1

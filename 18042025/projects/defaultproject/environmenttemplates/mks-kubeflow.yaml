@@ -1,0 +1,388 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: EnvironmentTemplate
+metadata:
+  annotations:
+    eaas.envmgmt.io/category: AI/ML, Private Cloud, MLOps, Kubeflow
+    eaas.envmgmt.io/launchtime: "27"
+    eaas.envmgmt.io/name: system-mks-kubeflow
+    eaas.envmgmt.io/releaseversion: v3.1
+    eaas.envmgmt.io/version: v1.0
+  name: mks-kubeflow
+  project: defaultproject
+spec:
+  agents:
+  - name: mksagentnew1
+  contexts:
+  - name: system-dns-config
+  - data:
+      envs:
+      - key: Controller Endpoint
+        options:
+          description: Enter the endpoint of the Rafay controller
+          override:
+            selectors:
+            - resource.*.RCTL_REST_ENDPOINT
+            type: allowed
+          required: true
+        value: console.rafay.dev
+      - key: API Key
+        options:
+          description: Enter the API key of the Rafay controller
+          override:
+            selectors:
+            - resource.*.RCTL_API_KEY
+            type: allowed
+          required: true
+          sensitive: true
+        sensitive: true
+        value: sealed://contexts.1.API Key.
+    name: kubeflow-config
+  iconURL: /assets/rafay-D9zfRZnZ.png
+  readme: "This system template allows you to provision FEAST, Kubeflow 1.9 and MLFlow
+    on an MKS cluster\n\n**Description:**\n\nThe template will provision FEAST- feature
+    Store, Kubeflow 1.9 and MLFlow on an MKS cluster. As part of the template output,
+    the end user is provided with an endpoint to access kubeflow\n\n**Resources:** \n\nThis
+    system template will deploy the following resources:\n- FEAST \n- Kubeflow 1.9\n-
+    MLFlow\n\n**Pre-Requisites:**\n- Kubeflow Host Certificate\n- Kubeflow Host Key\n-
+    Kubeflow Admin User Email\n- Kubeflow Admin User Password\n- Cluster name\n- Project
+    name if the cluster is in a project different from the environment\n- Istio SVC
+    Type (ClusterIP by default)\n- Ingress IP\n- Ingress Domain Type\n- Ingress Namespace
+    if the namespace is different from ingress-nginx\n- Host Cluster with nodes with
+    GPU nodes - MKS\n- Rafay Configuration: At template launch, supply the following
+    configuration values\n  - API Key\n- Agent Configuration: An agent must be configured
+    or shared in the project where the template will be used and should be healthy.
+    Follow these instructions to deploy an agent - <https://docs.rafay.co/integrations/repositories/agents/>.
+    If existing agents are available, they can be reused.\n- GPU nodes to set with\n
+    \ - sudo sysctl -w fs.inotify.max\\_user\\_watches=2099999999\n  - sudo sysctl
+    -w fs.inotify.max\\_user\\_instances=2099999999\n  - sudo sysctl -w fs.inotify.max\\_queued\\_events=2099999999\n\n**Launch
+    time:** \n\nThe estimated time to launch an environment using this template is
+    **27 minutes**.  "
+  resources:
+  - kind: resourcetemplate
+    name: res-gen-kubeconfig-user
+    resourceOptions:
+      version: v1.0
+    type: dynamic
+  - dependsOn:
+    - name: res-gen-kubeconfig-user
+    kind: resourcetemplate
+    name: res-kubeflow19-feast
+    resourceOptions:
+      version: v1.0
+    type: dynamic
+  - dependsOn:
+    - name: res-gen-kubeconfig-user
+    - name: res-kubeflow19-feast
+    kind: resourcetemplate
+    name: res-kubeflow19-core
+    resourceOptions:
+      version: v1.0
+    type: dynamic
+  - dependsOn:
+    - name: res-gen-kubeconfig-user
+    - name: res-kubeflow19-core
+    - name: res-kubeflow19-feast
+    kind: resourcetemplate
+    name: res-kubeflow19-mlflow
+    resourceOptions:
+      version: v1.0
+    type: dynamic
+  - dependsOn:
+    - name: res-kubeflow19-core
+    kind: resourcetemplate
+    name: res-gen-dnsconfig
+    resourceOptions:
+      version: v1.0
+    type: dynamic
+  secret:
+    name: file://artifacts/mks-kubeflow/sealed-secret.yaml
+  variables:
+  - name: KubeFlow Host Cert
+    options:
+      description: starts with BEGIN CERTIFICATE, only used for Custom Ingress Domain
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "66120"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.kubeflow_host_cert
+        type: allowed
+      sensitive: true
+    value: sealed://variables.0.
+    valueType: text
+  - name: KubeFlow Host Key
+    options:
+      description: starts with BEGIN PRIVATE KEY, only used for Custom Ingress Domain
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "66130"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.kubeflow_host_key
+        type: allowed
+      sensitive: true
+    value: sealed://variables.1.
+    valueType: text
+  - name: cluster_name
+    options:
+      description: Enter the name of the Kubernetes cluster
+      displayMetadata:
+        section: Kubeflow Configuration - Host Cluster
+        weight: "10110"
+      override:
+        selectors:
+        - resource.*.cluster_name
+        type: allowed
+      required: true
+    value: cluster-name
+    valueType: text
+  - name: KubeFlow Host Name
+    options:
+      description: Kubeflow UI Hostname, only used for Custom Ingress Domain
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "66110"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.kubeflow_host_name
+        - resource.res-gen-dnsconfig.sub_domain
+        type: allowed
+    value: kubeflow-host
+    valueType: text
+  - name: Istio SVC Type
+    options:
+      description: Service type for Istio ingress gateway
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "66190"
+      override:
+        restrictedValues:
+        - ClusterIP
+        - NodePort
+        selectors:
+        - resource.res-kubeflow19-core.istio_svc_type
+        type: restricted
+      required: true
+    value: ClusterIP
+    valueType: text
+  - name: Client Key Data
+    options:
+      override:
+        selectors:
+        - resource.res-kubeflow19-feast.clientkeydata
+        - resource.res-kubeflow19-core.clientkeydata
+        - resource.res-kubeflow19-mlflow.clientkeydata
+        type: notallowed
+    value: $(resource."res-gen-kubeconfig-user".output.clientkeydata.value)$
+    valueType: text
+  - name: Client Certificate Data
+    options:
+      override:
+        selectors:
+        - resource.res-kubeflow19-feast.clientcertificatedata
+        - resource.res-kubeflow19-core.clientcertificatedata
+        - resource.res-kubeflow19-mlflow.clientcertificatedata
+        type: notallowed
+    value: $(resource."res-gen-kubeconfig-user".output.clientcertificatedata.value)$
+    valueType: text
+  - name: Certificate Authority Data
+    options:
+      override:
+        selectors:
+        - resource.res-kubeflow19-feast.certificateauthoritydata
+        - resource.res-kubeflow19-core.certificateauthoritydata
+        - resource.res-kubeflow19-mlflow.certificateauthoritydata
+        type: notallowed
+    value: $(resource."res-gen-kubeconfig-user".output.certificateauthoritydata.value)$
+    valueType: text
+  - name: Kubeconfig
+    options:
+      override:
+        selectors:
+        - resource.res-kubeflow19-feast.kubeconfig
+        - resource.res-kubeflow19-core.kubeconfig
+        - resource.res-kubeflow19-mlflow.kubeconfig
+        type: notallowed
+    value: $(resource."res-gen-kubeconfig-user".output.kubeconfig.value)$
+    valueType: text
+  - name: Host Server
+    options:
+      description: Kubeconfig host server
+      override:
+        selectors:
+        - resource.res-kubeflow19-feast.hserver
+        - resource.res-kubeflow19-core.hserver
+        - resource.res-kubeflow19-mlflow.hserver
+        type: notallowed
+    value: $(resource."res-gen-kubeconfig-user".output.host.value)$
+    valueType: expression
+  - name: Helm Release Timeout
+    options:
+      description: Time in seconds to wait for any individual kubernetes operation
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "30200"
+      override:
+        selectors:
+        - resource.res-kubeflow19-feast.helm_timeout
+        - resource.res-kubeflow19-core.helm_timeout
+        - resource.res-kubeflow19-mlflow.helm_timeout
+        type: allowed
+    value: "3000"
+    valueType: text
+  - name: Ingress Namespace
+    options:
+      description: Ingress namespace
+      displayMetadata:
+        section: Kubeflow Configuration - Host Cluster
+        weight: "10130"
+      override:
+        selectors:
+        - resource.res-gen-dnsconfig.ingress_namespace
+        type: allowed
+    value: ingress-nginx
+    valueType: text
+  - name: Ingress Domain Type
+    options:
+      description: Ingress Domain Type
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "66100"
+      override:
+        restrictedValues:
+        - Rafay
+        - Custom
+        selectors:
+        - resource.res-gen-dnsconfig.ingress_domain_type
+        - resource.res-kubeflow19-core.ingress_domain_type
+        type: restricted
+    value: Rafay
+    valueType: text
+  - name: Host Cluster
+    options:
+      description: Host Cluster Name
+      override:
+        selectors:
+        - resource.res-gen-dnsconfig.host_cluster_name
+        type: notallowed
+    valueType: text
+  - name: Ingress IP
+    options:
+      description: Ingress ip name
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "66100"
+      override:
+        selectors:
+        - resource.res-gen-dnsconfig.ingress_ip
+        type: allowed
+    value: 192.168.0.1
+    valueType: text
+  - name: Project
+    options:
+      description: Enter the name of the project where the cluster exists
+      displayMetadata:
+        section: Kubeflow Configuration - Host Cluster
+        weight: "10100"
+      override:
+        selectors:
+        - resource.res-gen-dnsconfig.project
+        type: allowed
+    value: $(environment.project.name)$
+    valueType: expression
+  - name: Okta Client ID
+    options:
+      description: Client ID for Okta
+      displayMetadata:
+        section: Okta Configuration
+        weight: "50100"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.okta_client_id
+        type: allowed
+      required: true
+      sensitive: true
+    value: sealed://variables.16.
+    valueType: text
+  - name: Okta Client Secret
+    options:
+      description: Client Secret for Okta
+      displayMetadata:
+        section: Okta Configuration
+        weight: "50110"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.okta_client_secret
+        type: allowed
+      required: true
+      sensitive: true
+    value: sealed://variables.17.
+    valueType: text
+  - name: Okta Domain
+    options:
+      description: Domain of Okta
+      displayMetadata:
+        section: Okta Configuration
+        weight: "50120"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.okta_domain
+        type: allowed
+      required: true
+    value: example.okta.com
+    valueType: text
+  - name: Kubeflow Admin User Email
+    options:
+      description: Kubeflow Admin User Email
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "66140"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.kubeflow_static_user_email
+        type: allowed
+    value: user@example.com
+    valueType: text
+  - name: Kubeflow Admin User Password
+    options:
+      description: Kubeflow Admin User Password
+      displayMetadata:
+        section: Kubeflow Configuration
+        weight: "66150"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.kubeflow_static_user_password
+        type: allowed
+      sensitive: true
+    value: sealed://variables.20.
+    valueType: text
+  - name: name
+    options:
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.name
+        type: notallowed
+    value: $(environment.name)$
+    valueType: expression
+  - name: KubeFlow Local Users
+    options:
+      description: List of local users to create
+      displayMetadata:
+        section: Kubeflow Configuration
+        tooltip: |-
+          [
+              {
+                  "username"  = "admin@example.com"
+                  "password"  = "password"
+              }
+          ]
+        weight: "66160"
+      override:
+        selectors:
+        - resource.res-kubeflow19-core.kubeflow_local_users
+        type: allowed
+      sensitive: true
+    value: sealed://variables.22.
+    valueType: json
+  version: v1
+  versionState: draft

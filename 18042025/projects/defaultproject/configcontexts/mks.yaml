@@ -1,0 +1,24 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: ConfigContext
+metadata:
+  name: mks
+  project: defaultproject
+spec:
+  envs:
+  - key: RCTL_API_KEY
+    options:
+      mask: true
+    sensitive: true
+    value: sealed://RCTL_API_KEY.
+  - key: RCTL_REST_ENDPOINT
+    value: console.rafay.dev
+  - key: RCTL_PROJECT
+    value: defaultproject
+  files:
+  - data: c2VhbGVkOi8vZmlsZXMuMA==
+    name: id_ssh
+    options:
+      mask: true
+    sensitive: true
+  secret:
+    name: file://artifacts/mks/sealed-secret.yaml

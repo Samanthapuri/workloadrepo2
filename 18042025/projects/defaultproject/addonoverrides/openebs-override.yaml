@@ -1,0 +1,20 @@
+apiVersion: infra.k8smgmt.io/v3
+kind: AddonOverride
+metadata:
+  labels:
+    rafay.dev/overrideScope: clusterLabels
+    rafay.dev/overrideType: valuesFile
+  name: openebs-override
+  project: defaultproject
+spec:
+  placement:
+    labels:
+    - key: rafay.dev/clusterName
+      value: vijaysrookcephnew
+  resource:
+    selector:
+      selector: rafay.dev/system=true,rafay.dev/component=openebs-localpv
+    type: Addon
+  type: Helm
+  valuesPath:
+    name: file://openebs-override/openebs-override.yaml

@@ -1,0 +1,18 @@
+apiVersion: integrations.k8smgmt.io/v3
+kind: Repository
+metadata:
+  name: rafaycatalog-helm
+  project: defaultproject
+spec:
+  agents:
+  - {}
+  endpoint: http://rafaydemocatalog.s3-website-us-west-2.amazonaws.com
+  options: {}
+  type: Helm
+status:
+  projects:
+  - projectId: d2wpz6k
+    repositoryId: kjr5p4m
+  webhookConfig:
+    webhookSecret: 1600d644dc86e3a8e0368926e8b6befe3a504fe2b56ffd3c268d71bdbc693670
+    webhookURL: https://console.rafay.dev/v2/config/webhook/repository/kjr5p4m

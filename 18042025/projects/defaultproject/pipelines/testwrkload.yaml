@@ -1,0 +1,11 @@
+apiVersion: gitops.k8smgmt.io/v3
+kind: Pipeline
+metadata:
+  name: testwrkload
+  project: defaultproject
+spec:
+  stages:
+  - config:
+      workload: testwl30
+    name: test
+    type: DeployWorkload

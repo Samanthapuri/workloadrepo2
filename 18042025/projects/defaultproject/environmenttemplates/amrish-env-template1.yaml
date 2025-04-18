@@ -1,0 +1,26 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: EnvironmentTemplate
+metadata:
+  name: amrish-env-template1
+  project: defaultproject
+spec:
+  agents:
+  - name: tfdemo
+  resources:
+  - kind: resourcetemplate
+    name: amrish-resource-template1
+    resourceOptions:
+      version: v1
+    type: dynamic
+  schedules:
+  - cadence:
+      cronExpression: 0 * * * *
+      cronTimezone: America/New_York
+    name: testschedule1
+    optOutOptions:
+      allowOptOut: true
+      maxAllowedDuration: 60m
+      maxAllowedTimes: 100
+    type: deploy
+  version: ' v2'
+  versionState: active
