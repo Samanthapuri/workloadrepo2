@@ -5,10 +5,10 @@ metadata:
   project: defaultproject
 spec:
   agents:
-  - name: tfdemo
+  - name: eksagent
   credentials:
     password: sealed://credentials.password
-    username: samanthapuri
+    username: factset@rafay.co
   endpoint: https://github.com/Samanthapuri/tfdemo.git
   options: {}
   secret:
@@ -16,8 +16,8 @@ spec:
   type: Git
 status:
   agents:
-  - id: dk6eq0m
-    name: tfdemo
+  - id: 3mx5q72
+    name: eksagent
   projects:
   - projectId: d2wpz6k
     repositoryId: keo1vz2
