@@ -7,14 +7,15 @@ spec:
   blueprint:
     name: minimal
     version: latest
+  cloudCredentials: gcpcreds
   config:
     controlPlaneVersion: "1.29"
     features:
       enableComputeEnginePersistentDiskCSIDriver: true
-    gcpProject: $__gcpproject
+    gcpProject: on-prem-382813
     location:
       config:
-        zone: us-west1-c
+        zone: us-central1-a
       type: zonal
     network:
       access:
@@ -25,6 +26,12 @@ spec:
           enableAccessControlPlaneGlobal: true
           enablePrivateNodes: true
         type: private
+      controlPlaneAuthorizedNetwork:
+        authorizedNetwork:
+        - cidr: 0.0.0.0/0
+          name: test
+        enabled: true
+      dataPlaneV2: ADVANCED_DATAPATH
       enableVPCNativetraffic: true
       maxPodsPerNode: 110
       name: default
