@@ -4,9 +4,8 @@ metadata:
   name: testv1
   project: defaultproject
 spec:
-  schedule_optouts:
-  - duration: 21m
-    name: testschedule
+  agents:
+  - name: eksagent
   template:
     name: optouttest
     version: v5
