@@ -6,11 +6,14 @@ metadata:
 spec:
   agents:
   - name: eksagent
+  - name: eksagent2
   endpoint: https://helm.github.io/examples
   options: {}
   type: Helm
 status:
   agents:
+  - id: dkgzzj2
+    name: eksagent2
   - id: 3mx5q72
     name: eksagent
   projects:
