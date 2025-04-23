@@ -1,0 +1,20 @@
+apiVersion: eaas.envmgmt.io/v1
+kind: Environment
+metadata:
+  name: optouttest
+  project: defaultproject
+spec:
+  agents:
+  - name: eksagent
+  template:
+    name: optouttest
+    version: v5
+    versionState: unspecified
+  variables:
+  - name: username
+    options:
+      override:
+        type: allowed
+      required: true
+    value: vijays
+    valueType: text
