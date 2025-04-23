@@ -6,6 +6,7 @@ metadata:
 spec:
   agents:
   - name: eksagent
+  - name: eksagent2
   template:
     name: optouttest
     version: v5
