@@ -6,6 +6,7 @@ metadata:
 spec:
   agents:
   - name: eksagent
+  - name: eksagent2
   credentials:
     password: sealed://credentials.password
     username: samanthapuri
@@ -16,6 +17,8 @@ spec:
   type: Git
 status:
   agents:
+  - id: dkgzzj2
+    name: eksagent2
   - id: 3mx5q72
     name: eksagent
   projects:
