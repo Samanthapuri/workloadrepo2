@@ -23,4 +23,4 @@ spec:
     environment:
       name: optouttest
     selector: rafay.dev/clusterName=vijayseks180425
-  version: v1
+  version: v2
