@@ -17,4 +17,3 @@ spec:
     environment:
       name: fmtest010525
     selector: rafay.dev/clusterName=vijayseks180425
-  version: testworkload-2-v2-202505011737260000
