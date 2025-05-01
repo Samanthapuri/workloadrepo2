@@ -13,3 +13,8 @@ spec:
       timeout: 5m0s
     type: Helm
   namespace: defaultns
+  placement:
+    environment:
+      name: fmtest010525
+    selector: rafay.dev/clusterName=vijayseks180425
+  version: testworkload-3-v1-202505011829360000
