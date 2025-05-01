@@ -5,6 +5,15 @@ metadata:
   project: defaultproject
 spec:
   artifact:
-    artifact: {}
+    artifact:
+      chartPath:
+        name: file://artifacts/testworkload12345/tesapp-0.1.0.tgz
+    options:
+      maxHistory: 10
+      timeout: 5m0s
     type: Helm
   namespace: testns
+  placement:
+    environment:
+      name: fmtest010525
+    selector: rafay.dev/clusterName=vijayseks180425
