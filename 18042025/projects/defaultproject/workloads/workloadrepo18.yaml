@@ -1,0 +1,26 @@
+apiVersion: apps.k8smgmt.io/v3
+kind: Workload
+metadata:
+  name: workloadrepo18
+  project: defaultproject
+spec:
+  artifact:
+    artifact:
+      chartName: hello-world
+      chartVersion: 0.1.0
+      repository: workloadhelmrepo
+      valuesRef:
+        repository: workloadrepo1
+        revision: mian
+        valuesPaths:
+        - name: values/values.yaml
+    options:
+      maxHistory: 10
+      timeout: 5m0s
+    type: Helm
+  namespace: workloadrepo18
+  placement:
+    environment:
+      name: fmtest010525
+    selector: rafay.dev/clusterName=vijayseks180425
+  version: v1
