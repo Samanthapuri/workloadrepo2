@@ -14,5 +14,7 @@ spec:
       value: rafay-jdev-lab
     - key: rafay.dev/clusterName
       value: vijays03172025
+    - key: rafay.dev/clusterName
+      value: vijayseks180425
   resourceQuotas:
     storageRequests: 100Gi
