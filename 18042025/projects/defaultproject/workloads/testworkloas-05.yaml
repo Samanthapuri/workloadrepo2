@@ -5,6 +5,22 @@ metadata:
   project: defaultproject
 spec:
   artifact:
-    artifact: {}
+    artifact:
+      chartName: hello-world
+      chartVersion: 0.1.0
+      repository: workloadhelmrepo
+      valuesRef:
+        repository: workloadrepo1
+        revision: main
+        valuesPaths:
+        - name: values/values.yaml
+    options:
+      maxHistory: 10
+      timeout: 5m0s
     type: Helm
   namespace: workloadtest
+  placement:
+    environment:
+      name: fmtest010525
+    selector: rafay.dev/clusterName=vijayseks180425
+  version: testworkloas-05-v3-202505021659130000
